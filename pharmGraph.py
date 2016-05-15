@@ -6,14 +6,16 @@ import networkx as nx
 from pprint import pprint
 
 #Read from:
-fileN = "ragam_data.txt"
+fileN = "ragam_data_traditional.txt"
 #Save to:
 fileN2 = "Ragas.txt"
 #Each node class gets assigned a color
 #E.g. Broad classes (1) are black, drugs (2) red, uses (3) green, side effects (4) blue
-colors = [Color(0,0,0), Color(255,0,0), Color(0, 255, 0), Color(0, 0, 255)]
+colors = [Color(0,0,0), Color(255,0,0), Color(0, 255, 0), Color(0, 0, 255), Color(0, 255, 255), Color(255, 255,0)]
 width = 1200
 height = 700
+window_width = 1700
+window_height = 700
 
 # Nodes and edges can be styled with fill, stroke, strokewidth parameters.
 # Each node displays its id as a text label, stored as a Text object in Node.text.
@@ -49,7 +51,7 @@ for node in g.nodes:
         node.edges[0].length *= 0.1
 
 g.distance         = 25   # Overall spacing between nodes.
-g.layout.force     = 0.005 # Strength of the attractive & repulsive force.
+g.layout.force     = 0.008 # Strength of the attractive & repulsive force.
 g.layout.repulsion = 5   # Repulsion radius.
 
 save = None
@@ -218,6 +220,7 @@ def on_mouse_press(canvas, mouse):
 def draw(canvas):
 
     canvas.clear()
+    size(window_width, window_height)
     background(1)
     hsize = height/2
     wsize = width/2
@@ -246,20 +249,21 @@ def draw(canvas):
         dragged.y = dy
 
 #The little panel of buttons
-panel = Panel("Add Item", width=200, height=200)
-af = Field(value="", hint="")
-bf = Field(value="1", hint="")
-panel.append(
-    Rows(controls=[
-        ("Name", af),
-        ("ID", bf),
-        Button("Add", action=lambda button: addNodeF(af.value, bf.value, af)),
-        Button("Delete", action=lambda button: delNode(af.value, af)),
-        Button("Scramble", action=lambda button: scramble()),
-        #Button("Zoom", action=lambda button: zoom()),
-        Button("Save", action=lambda button: save())]))
-panel.pack()
-canvas.append(panel)
+if 0: 
+    panel = Panel("Add Item", width=200, height=200)
+    af = Field(value="", hint="")
+    bf = Field(value="1", hint="")
+    panel.append(
+        Rows(controls=[
+            ("Name", af),
+            ("ID", bf),
+            Button("Add", action=lambda button: addNodeF(af.value, bf.value, af)),
+            Button("Delete", action=lambda button: delNode(af.value, af)),
+            Button("Scramble", action=lambda button: scramble()),
+            #Button("Zoom", action=lambda button: zoom()),
+            Button("Save", action=lambda button: save())]))
+    panel.pack()
+    canvas.append(panel)
 canvas.on_mouse_press = on_mouse_press
 canvas.on_key_press = on_key_press
 canvas.y = 50
