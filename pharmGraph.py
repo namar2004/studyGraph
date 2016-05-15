@@ -4,25 +4,27 @@ from nodebox.gui import *
 import data_setup as su
 import networkx as nx
 
+#Read from:
 fileN = "data.txt"
-#Save to
+#Save to:
 fileN2 = "Ragas.txt"
+#Each node class gets assigned a color
+#E.g. Broad classes (1) are black, drugs (2) red, uses (3) green, side effects (4) blue
 colors = [Color(0,0,0), Color(255,0,0), Color(0, 255, 0), Color(0, 0, 255)]
 width = 1200
 height = 700
 
-# Create a graph with randomly connected nodes.
 # Nodes and edges can be styled with fill, stroke, strokewidth parameters.
 # Each node displays its id as a text label, stored as a Text object in Node.text.
 # To hide the node label, set the text parameter to None.
+##g handles the graphics of graph drawing
 g = Graph()
+#G2 handles the loading and saving of the graph
 G2 = nx.Graph()
-#data = su.initialize(fileN)
-#G2.add_nodes_from(data)
-#nx.write_adjlist(G2, "data2.txt")
+#load the graph from saved file
 G2 = nx.read_adjlist(fileN)
 
-#plot nodes
+#plot loaded nodes
 for drug in G2.nodes():
     classId = su.parseClass(drug)
     g.add_node(id=su.parseName(drug), id2 = classId, radius=8, stroke=color(0), fill=colors[classId - 1],
@@ -34,17 +36,11 @@ for ed in G2.edges():
     node2 = su.parseName(ed[1])
     g.add_edge(node1, node2, length=20.0, weight=1.0, stroke=color(0))
 
-#for edge in G2.edges():
-
-#g.add_edge(node1, node2,
-           #length = 1.0,
-           #weight = random(),
-           #stroke = color(0))
 
 # Two handy tricks to prettify the layout:
 # 1) Nodes with a higher weight (i.e. incoming traffic) appear bigger.
 for node in g.nodes:
-    node.radius = node.radius + node.radius*node.weight*0.5
+    node.radius = node.radius + node.radius*node.weight*0.3
 # 2) Nodes with only one connection ("leaf" nodes) have a shorter connection.
 for node in g.nodes:
     if len(node.edges) == 1:
@@ -60,12 +56,14 @@ dragged = None
 node1 = None
 node2 = None
 node3 = None
+#Translates the graphics node id into a saveable id that has spaces removed
 def ntx(nodex):
     name = nodex.id
     if (' ' in name) == True:
         name = name.replace(" ", "_")
     return name+'.'+str(nodex.id2)
 
+#Have to add the edge both to graphics (g) and underlying savable graph (G2)
 def addEdge():
     global node1, node2
     g.add_edge(node1, node2, length=20.0, weight=1.0, stroke=color(0))
@@ -75,6 +73,8 @@ def addEdge():
     node1 = None
     node2 = None
 
+#If someone put a value in the field, then you add a new node
+#Else you attempt to add an edge between two nodes (if selected)
 def addNodeF(ida, idb, fld):
     ids = ida+'.'+idb
     ids = ids.replace(" ", "_")
@@ -91,6 +91,9 @@ def addNodeF(ida, idb, fld):
     elif node1 and node2:
         addEdge()
 
+#If someone named a certain node in the field, then delete it
+#Else if you selected two nodes, delete the edge between them
+#Else delete the node (automatically deletes all its edges)
 def delNode(ida, fld):
     global node1, node2
     if zoomed:
@@ -119,6 +122,10 @@ def delNode(ida, fld):
         unselect(node1)
         node1 = None
 
+#Kind of a stupid, easy way to do this, but destroys the graphics (g) graph
+#and shows only the nodes the selected node is connected to
+#If already zoomed, it restores the original graph, which is saved in variable 'save'.
+#You are not allowed to edit in zoomed mode because it would mess things up the way I coded it
 def zoom():
     global node1, zoomed, save
     if zoomed:
@@ -132,6 +139,9 @@ def zoom():
     elif node2 and node1:
         save = g.nodes
 
+#For my studying purposes - tries to delete all the edges (but fails)
+#Then I try to piece it back together by memory.
+#Pretty buggy - NEVER SAVE AFTER SCRAMBLING!
 def scramble():
     for ed in g.edges:
         #G2.remove_edge(ntx(ed.node1), ntx(ed.node2))
@@ -140,15 +150,21 @@ def scramble():
         nod.x = 0
         nod.y = 0
 
+#Thick black outline so that you know what you clicked
 def select(nod):
     nod.strokewidth = 4
 
 def unselect(nod):
     nod.strokewidth = 1
 
+#Saves the current graph state into file specified by 'fileN2'
 def save():
     nx.write_adjlist(G2, fileN2)
 
+#Keyboard shortcuts
+#'a' adds an edge between 2 selected nodes
+#'CTRL+z' calls zoom
+#'CTRL+p' pauses the graphics (haven't really needed to use this)
 def on_key_press(cvs, keys):
     global node1, node2
     if keys.char == 'a' and node2 and node1:
@@ -158,6 +174,10 @@ def on_key_press(cvs, keys):
     if keys.code == 'p' and CTRL in keys.modifiers:
         cvs.paused = not cvs.paused
 
+#Handles all the node selection and logic behind it
+#In short:
+#-if two nodes are selected already, the next one replaces the old node2
+#-if you click on a selected node, it gets unselected
 def on_mouse_press(canvas, mouse):
     global node1
     global node2
@@ -192,12 +212,14 @@ def on_mouse_press(canvas, mouse):
             node2 = nodex
             select(node2)
 
+#The loop that the canvas runs to draw the graphics
 def draw(canvas):
 
     canvas.clear()
     background(1)
     hsize = height/2
     wsize = width/2
+    #Sets the coordinate system so that (0,0) is in the center of the canvas
     translate(wsize, hsize)
 
     # With directed=True, edges have an arrowhead indicating the direction of the connection.
@@ -221,6 +243,7 @@ def draw(canvas):
         dragged.x = dx
         dragged.y = dy
 
+#The little panel of buttons
 panel = Panel("Add Item", width=200, height=200)
 af = Field(value="", hint="")
 bf = Field(value="1", hint="")
