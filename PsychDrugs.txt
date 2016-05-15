@@ -1,0 +1,57 @@
+#C:/Users/Raman/PycharmProjects/untitled/pharmGraph.py
+# GMT Tue May 10 01:38:54 2016
+# 
+Haloperidol.2 Antipsychotic.1 High_potency.4
+SSRIs.1 Bulimia.3 GAD.3 Fluoxetine.2 Citalopram.2 Panic_disorder.3 SIADH.4 Depression.3 Sertraline.2 Paroxetine.2 sexual_dysfunction.4 OCD.3 PTSD.3
+anti_alpha1.4 Low_potency.4
+anti_D2R.3 Antipsychotic.1 Atypical_antipsychotic.1
+hyperprolactin.4 Risperidone.2
+Mania.3 Atypical_antipsychotic.1
+SNRIs.1 GAD.3 Diabetic_neuropathy.3 Milnacipram.2 Depression.3 BP_elevation.4 sedation.4 Duloxetine.2 nausea.4 Venlafaxine.2
+Venlafaxine.2 Panic_disorder.3 PTSD.3 OCD.3
+Antipsychotic.1 Schizophrenia.3 Trifluoperazine.2 Psychosis.3 Chlorpromazine.2 endocrine.4 Fluphenazine.2 Thioridazine.2 OCD.3 EPS.4 QT_long.4
+Atypical_antipsychotic.1 Schizophrenia.3 Depression.3 Ziprasidone.2 Quetiapine.2 Risperidone.2 Clozapine.2 Olanzapine.2 OCD.3 Aripiprazole.2
+Schizophrenia.3
+Panic_disorder.3
+GAD.3
+D2_partial.3 Aripiprazole.2
+Olanzapine.2 metabolic.4
+BP_elevation.4
+Sertraline.2
+High_potency.4 moreEPS.4 Fluphenazine.2 Trifluoperazine.2
+Chlorpromazine.2 Low_potency.4 corneal_deposits.4
+Diabetic_neuropathy.3
+metabolic.4 Clozapine.2
+anti_cholinergic.4 Low_potency.4
+OCD.3 CBT.2
+EPS.4
+Fluphenazine.2
+Bulimia.3
+Fluoxetine.2
+Trifluoperazine.2
+sedation.4
+SIADH.4
+Psychosis.3
+Duloxetine.2
+nausea.4
+agranulocytosis.4 Clozapine.2
+Risperidone.2
+Clozapine.2
+Thioridazine.2 Low_potency.4 retinal_deposits.4
+moreEPS.4
+Aripiprazole.2
+PTSD.3
+anti_Hist.4 Low_potency.4
+QT_long.4
+corneal_deposits.4
+CBT.2
+Citalopram.2
+retinal_deposits.4
+Milnacipram.2
+Depression.3
+Quetiapine.2
+Paroxetine.2
+sexual_dysfunction.4
+Ziprasidone.2
+endocrine.4
+Low_potency.4

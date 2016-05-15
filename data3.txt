@@ -1,0 +1,17 @@
+#C:/Users/Raman/PycharmProjects/untitled/pharmGraph.py
+# GMT Fri May 06 20:27:48 2016
+#
+Haloperidol.2 Antipsychotic.1 High_potency.4
+Trifluoperazine.2 Antipsychotic.1 High_potency.4
+Olanzapine.2 Atypical_antipsychotic.1
+High_potency.4 Fluphenazine.2
+Chlorpromazine.2 Antipsychotic.1 Low_potency.4
+Quetiapine.2 Atypical_antipsychotic.1
+Fluphenazine.2 Antipsychotic.1
+Clozapine.2 Atypical_antipsychotic.1
+Ziprasidone.2 Atypical_antipsychotic.1
+Thioridazine.2 Antipsychotic.1 Low_potency.4
+Low_potency.4
+Antipsychotic.1
+Atypical_antipsychotic.1 Risperidone.2
+Risperidone.2
