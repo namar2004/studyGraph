@@ -3,9 +3,10 @@ from nodebox.graphics.physics import Node, Edge, Graph
 from nodebox.gui import *
 import data_setup as su
 import networkx as nx
+from pprint import pprint
 
 #Read from:
-fileN = "data.txt"
+fileN = "ragam_data.txt"
 #Save to:
 fileN2 = "Ragas.txt"
 #Each node class gets assigned a color
@@ -27,6 +28,7 @@ G2 = nx.read_adjlist(fileN)
 #plot loaded nodes
 for drug in G2.nodes():
     classId = su.parseClass(drug)
+
     g.add_node(id=su.parseName(drug), id2 = classId, radius=8, stroke=color(0), fill=colors[classId - 1],
                text=color(0))
 

@@ -1,0 +1,138 @@
+# Styles:
+# .1 - melakarta
+# .2 - janyam
+# .3 - modal ring (graha bhedam)
+# .4 - [placeholder]
+Ionian_modal_ring.3 Shankarabharanam.1
+Ionian_modal_ring.3 Kharaharapriya.1
+Ionian_modal_ring.3 Todi.1
+Ionian_modal_ring.3 Kalyani.1
+Ionian_modal_ring.3 Hari_Kambhoji.1
+Ionian_modal_ring.3 Natabhairavi.1
+Ionian_modal_ring.3	Locrian_mode.4 #invalid melakarta
+#===============================================================================
+Double_harmonic_modal_ring.3 Mayamalavagowla.1
+Double_harmonic_modal_ring.3 Rasikapriya.1 #no known janyams
+Double_harmonic_modal_ring.3 Simhendramadyamam.1 #no known janyams
+#===============================================================================
+Nattai_modal_ring.3 Shubhapantuvarali.1
+Nattai_modal_ring.3 Chala_Nattai.1
+#===============================================================================
+Chakravakam_modal_ring.3 Chakravakam.1
+Chakravakam_modal_ring.3 Sarasangi.1
+Chakravakam_modal_ring.3 Dharmavati.1
+#===============================================================================
+Keeravani_modal_ring.3 Keeravani.1
+Keeravani_modal_ring.3 Hemavati.1
+Keeravani_modal_ring.3 Vakulabharanam.1
+Keeravani_modal_ring.3 Kosalam.1
+#===============================================================================
+Kalyani.1 Hamir_Kalyani.2
+Kalyani.1 Mohana_Kalyani.2
+Kalyani.1 Saranga.2
+Kalyani.1 Sunadavinodini.2
+Kalyani.1 Yamuna_Kalyani.2
+Shankarabharanam.1 Arabhi.2
+Shankarabharanam.1 Atana.2
+Shankarabharanam.1 Begada.2
+Shankarabharanam.1 Behag.2
+Shankarabharanam.1 Bilahari.2
+Shankarabharanam.1 Devagandhari.2
+Shankarabharanam.1 Hamsadhwani.2
+Shankarabharanam.1 Janaranjani.2
+Shankarabharanam.1 Kadanakuthoohalam.2
+Shankarabharanam.1 Kannada.2
+Shankarabharanam.1 Kedaram.2
+Shankarabharanam.1 Kurinji.2
+Shankarabharanam.1 Maand.2
+Shankarabharanam.1 Neelambari.2
+Shankarabharanam.1 Poornachandrika.2
+Shankarabharanam.1 Suddha_Saveri.2
+Hari_Kambhoji.1 Bahudari.2
+Hari_Kambhoji.1 Desh.2
+Hari_Kambhoji.1 Dwijavanti.2
+Hari_Kambhoji.1 Kambhoji.2
+Hari_Kambhoji.1 Kedara_Gowlai.2
+Hari_Kambhoji.1 Khamas.2
+Hari_Kambhoji.1 Kuntalavarali.2
+Hari_Kambhoji.1 Mohanam.2
+Hari_Kambhoji.1 Nagaswarali.2
+Hari_Kambhoji.1 Nattai_Kurinji.2
+Hari_Kambhoji.1 Navarasa_Kanada.2
+Hari_Kambhoji.1 Sahana.2
+Hari_Kambhoji.1 Sama.2
+Hari_Kambhoji.1 Senjurutti.2
+Hari_Kambhoji.1 Surutti.2
+Hari_Kambhoji.1 Thilang.2
+Hari_Kambhoji.1 Yadukula_Kambhoji.2
+Kharaharapriya.1 Abheri.2
+Kharaharapriya.1 Abhogi.2
+Kharaharapriya.1 Andolika.2
+Kharaharapriya.1 Bageshri.2
+Kharaharapriya.1 Brindavana_Saranga.2
+Kharaharapriya.1 darbar.2
+Kharaharapriya.1 Deva_Manohari.2
+Kharaharapriya.1 Kanada.2
+Kharaharapriya.1 Kannada_Gowlai.2
+Kharaharapriya.1 Kapi.2
+Kharaharapriya.1 Karna_Ranjani.2
+Kharaharapriya.1 Madhyamavati.2
+Kharaharapriya.1 Manirangu.2
+Kharaharapriya.1 Mukhari.2
+Kharaharapriya.1 Nayaki.2
+Kharaharapriya.1 Reethigowlai.2
+Kharaharapriya.1 Shri_Ragam.2
+Kharaharapriya.1 Sivaranjani.2
+Kharaharapriya.1 Sriranjani.2
+Kharaharapriya.1 Suddha_Dhanyasi.2
+Kharaharapriya.1 Varamu.2
+Natabhairavi.1 Ananda_Bhairavi.2
+Natabhairavi.1 Bhairavi.2
+Natabhairavi.1 Darbari_Kanada.2
+Natabhairavi.1 Hindolam.2
+Natabhairavi.1 Jayanthashri.2
+Natabhairavi.1 Saramati.2
+Todi.1 Ahiri.2
+Todi.1 Asaveri.2
+Todi.1 Bhoopalam.2
+Todi.1 Dhanyasi.2
+Todi.1 Punnagavarali.2
+Mayamalavagowla.1 Bowli.2
+Mayamalavagowla.1 Gowlai.2
+Mayamalavagowla.1 Jaganmohini.2
+Mayamalavagowla.1 Lalitha.2
+Mayamalavagowla.1 Malahari.2
+Mayamalavagowla.1 Nadanamakriya.2
+Mayamalavagowla.1 Revagupti.2
+Mayamalavagowla.1 Saveri.2
+Chakravakam.1 Kalavati.2
+Chakravakam.1 Malayamarutham.2
+Chakravakam.1 Valaji.2
+Sarasangi.1 Kamala_Manohari.2
+Sarasangi.1 Nalinakanthi.2
+Sarasangi.1 Vasanthi.2
+Dharmavati.1 Madhuvanti.2
+Dharmavati.1 Ranjani.2
+Dharmavati.1 Vijayanagari.2
+Chala_Nattai.1 Gambheera_Nattai.2
+Chala_Nattai.1 Nattai.2
+Keeravani.1 Chandrakauns.2
+Keeravani.1 Kalyana_Vasantham.2
+Suryakantham.1 Vasantha.2
+Suryakantham.1 Sowrashtram.2
+Neethimathi.1 Hamsanadam.2
+Gamanashrama.1 Hamsanandi.2
+Gamanashrama.1 Poorvikalyani.2
+Pavani.1 Chandrajyoti.2
+Chithrambari.1 Amrithavarshini.2
+Kamardhini.1 Mandari.2
+Natakapriya.1 Sindhu_Bhairavi.2
+Rathnangi.1 Revati.2
+Vachaspati.1 Saraswathi.2
+Jhalavarali.1 Varali.2
+Sumanesaranjani.1
+Gowri_Manohari.1
+Nasikabhooshani.1
+Charukesi.1
+Hemavati.1
+Latangi.1
