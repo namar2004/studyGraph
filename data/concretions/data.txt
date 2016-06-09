@@ -1,0 +1,8 @@
+#C:/Users/Raman/PycharmProjects/untitled/pharmGraph.py
+# GMT Tue May 10 01:13:18 2016
+# 
+Raaga.1 Mayamalavagaula.2
+Mohana.2
+Kalyani.2 Sharp_4th.3
+Mayamalavagaula.2
+Sharp_4th.3

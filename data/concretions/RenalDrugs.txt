@@ -1,0 +1,76 @@
+#C:/Users/Raman/PycharmProjects/untitled/pharmGraph.py
+# GMT Sun May 15 01:37:19 2016
+# 
+Nesiritide.2 Recombinant_BNP.1
+TAL.3
+hyperglycemia.4
+hyperkalemia.4 ACE_Inhibitor.1
+paresthesia.4 Acetazolamide.2
+Lisinopril.2 ACE_Inhibitor.1
+PCT.3
+Amiloride.2
+pseudotumor_cerebri.3 Acetazolamide.2
+Chlorthalidone.2
+hypercalcemia.4
+CCD.3
+ascites.3
+Furosemide.2 Loop_diuretics.1 Sulfonamide_diuretic.1
+teratogen.4 AT1-receptor_antag.1 ACE_Inhibitor.1
+alkalosis.3 Acetazolamide.2
+Captopril.2 ACE_Inhibitor.1
+NKCC.3 Loop_diuretics.1
+Loop_diuretics.1 ototoxic.4 magnesium_loss.4 metabolic_alkalosis.4 Edema.3 Ethacrynic_acid.2 Torsemide.2 gout.4 hypokalemia.4 calcium_loss.4 Bumetanide.2 stimulate_PGE.3 abolish_countercurrent.3
+AldosteroneR_antag.1
+HTN.3 AT1-receptor_antag.1 Recombinant_BNP.1 ACE_Inhibitor.1 Renin_inhibitor.1
+really_ototoxic.4 Ethacrynic_acid.2
+Renin_inhibitor.1 Aliskiren.2
+nephrolithiasis.3
+Metolazone.2
+Edema.3
+Ethacrynic_acid.2
+Spironolactone.2
+cough.4 ACE_Inhibitor.1
+nephrogenic_diabetes_insipidus.3
+Eplerenone.2
+ENaC.3
+calcium_loss.4
+DCT.3
+androgenR.4
+Enalapril.2 ACE_Inhibitor.1 Prodrugs.1
+ototoxic.4
+NCC.3
+ACE_Inhibitor.1 angioedema.4 diabetic_nephropathy.3 AT1-receptor_antag.1 bradykinin.3 Ramipril.2 heart_failure.3
+HCTZ.2
+Acetazolamide.2 altitude_sickness.3 glaucoma.3 Sulfonamide_diuretic.1 acidosis.4
+Losartan.2 AT1-receptor_antag.1
+Recombinant_BNP.1
+AT1-receptor_antag.1 Valsartan.2
+gout.4
+Triamterene.2
+torsades.4
+acidosis.4
+stimulate_PGE.3
+Mannitol.2
+carbonic_anhydraseI.3
+diabetic_nephropathy.3
+once-a-day.3
+angioedema.4
+heart_failure.3
+Prodrugs.1 Ramipril.2
+altitude_sickness.3
+Liddle's_syndrome.3
+metabolic_alkalosis.4
+magnesium_loss.4
+Valsartan.2
+Ramipril.2
+Torsemide.2 Sulfonamide_diuretic.1
+K-sparing_diuretics.1
+Sulfonamide_diuretic.1 Bumetanide.2
+Thiazide_diuretics.1
+hypokalemia.4
+bradykinin.3
+osteoporosis.3
+Aliskiren.2
+Bumetanide.2
+glaucoma.3
+abolish_countercurrent.3

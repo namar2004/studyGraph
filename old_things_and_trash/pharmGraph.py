@@ -6,7 +6,10 @@ import networkx as nx
 from pprint import pprint
 
 #Read from:
-fileN = "ragam_data_traditional.txt"
+# fileN = "ragam_data_traditional.txt"
+# fileN = "PsychDrugs.txt"
+# fileN = "RenalDrugs.txt"
+# fileN = "data3.txt"
 fileN = "ragam_data_modal.txt"
 #Save to:
 fileN2 = "Ragas.txt"

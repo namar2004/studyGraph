@@ -1,0 +1,7 @@
+{
+	"DATA_FILE": "data/concretions/RagamsTraditional.json",
+	"NODE_RADIUS": 15,
+	"CHARGE": -320,
+	"LINK_DISTANCE": 20,
+	"FONT_SIZE": "8px"	
+}

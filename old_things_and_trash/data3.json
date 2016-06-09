@@ -1,0 +1,38 @@
+{"nodes": [
+    {"name": "Antipsychotic", "group":1},
+    {"name": "Atypical_antipsychotic", "group":1},
+    {"name": "Chlorpromazine", "group":2},
+    {"name": "Clozapine", "group":2},
+    {"name": "Fluphenazine", "group":2},
+    {"name": "Haloperidol", "group":2},
+    {"name": "High_potency", "group":4},
+    {"name": "Low_potency", "group":4},
+    {"name": "Olanzapine", "group":2},
+    {"name": "Quetiapine", "group":2},
+    {"name": "Risperidone", "group":2},
+    {"name": "Thioridazine", "group":2},
+    {"name": "Trifluoperazine", "group":2},
+    {"name": "Ziprasidone", "group":2}
+    ],
+"links": [
+    {"source": "Haloperidol", "target": "Antipsychotic", "value": 1},
+    {"source": "Haloperidol", "target": "High_potency", "value": 1},
+    {"source": "Trifluoperazine", "target": "Antipsychotic", "value": 1},
+    {"source": "Trifluoperazine", "target": "High_potency", "value": 1},
+    {"source": "Olanzapine", "target": "Atypical_antipsychotic", "value": 1},
+    {"source": "High_potency", "target": "Fluphenazine", "value": 1},
+    {"source": "Chlorpromazine", "target": "Antipsychotic", "value": 1},
+    {"source": "Chlorpromazine", "target": "Low_potency", "value": 1},
+    {"source": "Quetiapine", "target": "Atypical_antipsychotic", "value": 1},
+    {"source": "Fluphenazine", "target": "Antipsychotic", "value": 1},
+    {"source": "Clozapine", "target": "Atypical_antipsychotic", "value": 1},
+    {"source": "Ziprasidone", "target": "Atypical_antipsychotic", "value": 1},
+    {"source": "Thioridazine", "target": "Antipsychotic", "value": 1},
+    {"source": "Thioridazine", "target": "Low_potency", "value": 1},
+    {"source": "Atypical_antipsychotic", "target": "Risperidone", "value": 1}
+]
+}
+
+
+
+
