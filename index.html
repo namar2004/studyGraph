@@ -123,11 +123,12 @@
 
   <script>
 
-    var INITIAL_DATASET = "RagamsModalAbstraction.json"
+    // var INITIAL_DATASET = "RagamsModalAbstraction.json"
+    var INITIAL_DATASET = "Data3Abstraction.json"
     var TEXT_COLOR = "#ffffff";
 
-    var width = 1200,
-    height = 1000
+    var width = 1220,
+    height = 600
 
     DATA_FILE = INITIAL_DATASET; 
     NODE_RADIUS = 2; 
@@ -173,48 +174,44 @@
     d3.scale.category20c();
     */
     function clicked(d) {
-        var mouseX = d.layerX;
-        var mouseY = d.layerY;
-        // alert(mouseY);
+        // group,name,index,weight,x,y,px,py,fixed
+        // alert(d.x + "-" + d.y + "-" + d.px + "-" + d.py);
 
-      // alert(d.name);
-      // var x, y, k;
+        if (d.fixed){
+          d.fixed = 0;
+        } else {
+          d.fixed = 1;
+        }
+        return;
+        var zoomFactor = 2.0;
+        // var thisNode = d3.select(this);
+        var thisNode = d3.select("#" + d.name);
+        var svg = d3.select("#svg-vis");
 
-      // if (d && centered !== d) {
-      //   var centroid = path.centroid(d);
-      //   x = centroid[0];
-      //   y = centroid[1];
-      //   k = 4;
-      //   centered = d;
-      // } else {
-      //   x = width / 2;
-      //   y = height / 2;
-      //   k = 1;
-      //   centered = null;
-      // }
+
+        thisNode.transition();
+        svg.transition().attr("transform", 
+                              "translate(" + 
+                              // (-parseInt(thisNode.attr("cx"))*zoomFactor + width/2) + "," +
+                              // (-parseInt(thisNode.attr("cy"))*zoomFactor + height/2) +
+                              (-parseInt(thisNode.attr("cx"))*zoomFactor + width/2) + "," +
+                              (-parseInt(thisNode.attr("cy"))*zoomFactor + height/2) +                              
+                                ")" + 
+                                "scale(" + zoomFactor + ")");        
+
     }  
-
-        // node.attr("transform", function(d) {
-        //         //Here i create a node radius so it doesnt go offscreen
-        //         var nodeRadius = d.weight * 2 + 12
-
-        //         //here I do checks to see if it goes offscreen
-        //         if(d.x<= nodeRadius){
-        //            d.x = nodeRadius;
-        //            }
-        //         if(d.y<= nodeRadius){
-        //            d.y = nodeRadius;
-        //            }7
-        //         if(d.x>width - nodeRadius){
-        //            d.x = width - nodeRadius;
-        //            }
-        //         if(d.y>height - nodeRadius){
-        //            d.y = height - nodeRadius;
-        //            }
-
-        //         return "translate(" + d.x + "," + d.y + ")";
-
-        //     });    
+    
+      function redraw() {
+        //This function redraws the canvas after the user has zoomed in or out.
+        var svg = d3.select("#svg-vis");
+        trans=d3.event.translate;
+        scale=d3.event.scale;
+        svg.attr("transform",
+            // "translate(3,3)"
+            // + " scale(2)");
+            "translate(" + trans + ")"
+            + " scale(" + scale + ")");        
+      };
 
     function drawGraph(){
       var color = d3.scale.category10();
@@ -227,7 +224,11 @@
       var svg = d3.select("#svg-div").append("svg")
       .attr("width", width)
       .attr("height", height)
-      .attr("id", "svg-screen");
+      // .call(d3.behavior.zoom().on("zoom", redraw))
+      .attr("id", "svg-screen")
+      .append('svg:g')
+      .call(d3.behavior.zoom().on("zoom", redraw)) //if client zooms, call the function redraw()
+      .attr("id", "svg-vis");
 
 
       d3.json(DATA_FILE, function(error, json) {
@@ -240,8 +241,8 @@
 
       //select all nodes (not to be confused with nodes in the graph) with the tag name ".link"
       var link = svg.selectAll(".link") 
-          //Data is specified as an array of values, and each value is passed as the first argument (d) to selection functions.  With the default join-by-index, the first element in the data array is passed to the first node in the selection, the second element to the second node, and so on.
-          .data(json.links) 
+            //Data is specified as an array of values, and each value is passed as the first argument (d) to selection functions.  With the default join-by-index, the first element in the data array is passed to the first node in the selection, the second element to the second node, and so on.
+            .data(json.links) 
             // After callind data(), d3 tries to associate all nodes with tagname ".link" to values in json.links.
             //However, there aren't yet any such nodes.  the .enter() function makes one.
             //TODO: unsure what the argument to append() is.
@@ -256,40 +257,18 @@
         .data(json.nodes)
         .enter()
         .append('g')
+        .attr("id", function(d) {return d.name; })
+        .attr("cx", function(d){return d.x})
+        .attr("cy", function(d){return d.y})        
         .classed('gnode', true);
 
         var node = gnodes.append("circle")
         .attr("class", "node")
         .attr("r", NODE_RADIUS)
+
         .style("fill", function(d) { return color(d.group); })
         .call(force.drag)
         .on("click", clicked);
-      //   .attr("transform", function(d) {
-      //   //Here i create a node radius so it doesnt go offscreen
-      //     var nodeRadius = d.weight * 2 + 12
-
-      //     //here I do checks to see if it goes offscreen
-      //     if(d.x<= nodeRadius){
-      //        d.x = nodeRadius;
-      //        }
-      //     if(d.y<= nodeRadius){
-      //        d.y = nodeRadius;
-      //        }
-      //     if(d.x>width - nodeRadius){
-      //        d.x = width - nodeRadius;
-      //        }
-      //     if(d.y>height - nodeRadius){
-      //        d.y = height - nodeRadius;
-      //        }
-      //     return "translate(" + d.x + "," + d.y + ")";
-
-      // });
-
-
-
-        // var zoom = d3.behavior.zoom()
-        //   .scaleExtent([1, 10])
-        //   .on("zoom", zoomed);
 
 
         gnodes.append("text")
