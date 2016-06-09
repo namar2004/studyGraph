@@ -16,7 +16,32 @@
     }    
     .text {
       fill: #fff;
-    }        
+    }   
+
+    .btn {
+        padding: 14px 24px;
+        border: 0 none;
+        /*letter-spacing: 1px;*/
+        /*text-transform: uppercase;*/
+    }
+     
+    .btn:focus, .btn:active:focus, .btn.active:focus {
+        outline: 0 none;
+    }
+     
+    .btn-primary {
+        background: #740;
+        color: #ffffff;
+    }
+     
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+        background: #b80;
+    }
+     
+    .btn-primary:active, .btn-primary.active {
+        background: #b80;
+        box-shadow: none;
+    }            
 /*    INPUT#NNodesInput {
       height: 30px;
       width: 80px;
@@ -81,6 +106,10 @@
         <button type="button" class="btn btn-primary btn-block" onclick="createGraph('RagamsTraditionalAbstraction.json')">Ragams by Melakarta</button>
       </div>
 
+<!--       <div class="col-md-2"> 
+        <button type="button" class="btn btn-primary btn-block" onclick="changeStyle()">Change Style</button>
+      </div>  -->     
+
     </div>
 
     <div class="row-md-10" id="svg-div">
@@ -105,6 +134,11 @@
     CHARGE = -200; 
     LINK_DISTANCE = 12;
     FONT_SIZE = "80px";
+
+    // function changeStyle(AbstractFilename){
+    //   document.body.style.backgroundColor = "#fff";
+    //   TEXT_COLOR = "#000";
+    // }    
 
     function createGraph(AbstractFilename){
       if (document.contains(document.getElementById("svg-screen"))) {
@@ -138,8 +172,52 @@
     d3.scale.category20b();
     d3.scale.category20c();
     */
+    function clicked(d) {
+        var mouseX = d.layerX;
+        var mouseY = d.layerY;
+        // alert(mouseY);
+
+      // alert(d.name);
+      // var x, y, k;
+
+      // if (d && centered !== d) {
+      //   var centroid = path.centroid(d);
+      //   x = centroid[0];
+      //   y = centroid[1];
+      //   k = 4;
+      //   centered = d;
+      // } else {
+      //   x = width / 2;
+      //   y = height / 2;
+      //   k = 1;
+      //   centered = null;
+      // }
+    }  
+
+        // node.attr("transform", function(d) {
+        //         //Here i create a node radius so it doesnt go offscreen
+        //         var nodeRadius = d.weight * 2 + 12
+
+        //         //here I do checks to see if it goes offscreen
+        //         if(d.x<= nodeRadius){
+        //            d.x = nodeRadius;
+        //            }
+        //         if(d.y<= nodeRadius){
+        //            d.y = nodeRadius;
+        //            }7
+        //         if(d.x>width - nodeRadius){
+        //            d.x = width - nodeRadius;
+        //            }
+        //         if(d.y>height - nodeRadius){
+        //            d.y = height - nodeRadius;
+        //            }
+
+        //         return "translate(" + d.x + "," + d.y + ")";
+
+        //     });    
+
     function drawGraph(){
-      var color = d3.scale.category20();
+      var color = d3.scale.category10();
 
       var force = d3.layout.force()
       .charge(CHARGE)
@@ -184,7 +262,35 @@
         .attr("class", "node")
         .attr("r", NODE_RADIUS)
         .style("fill", function(d) { return color(d.group); })
-        .call(force.drag);
+        .call(force.drag)
+        .on("click", clicked);
+      //   .attr("transform", function(d) {
+      //   //Here i create a node radius so it doesnt go offscreen
+      //     var nodeRadius = d.weight * 2 + 12
+
+      //     //here I do checks to see if it goes offscreen
+      //     if(d.x<= nodeRadius){
+      //        d.x = nodeRadius;
+      //        }
+      //     if(d.y<= nodeRadius){
+      //        d.y = nodeRadius;
+      //        }
+      //     if(d.x>width - nodeRadius){
+      //        d.x = width - nodeRadius;
+      //        }
+      //     if(d.y>height - nodeRadius){
+      //        d.y = height - nodeRadius;
+      //        }
+      //     return "translate(" + d.x + "," + d.y + ")";
+
+      // });
+
+
+
+        // var zoom = d3.behavior.zoom()
+        //   .scaleExtent([1, 10])
+        //   .on("zoom", zoomed);
+
 
         gnodes.append("text")
         .style("font-size", FONT_SIZE)
