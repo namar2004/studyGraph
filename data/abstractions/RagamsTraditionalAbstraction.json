@@ -1,5 +1,6 @@
 {
 	"DATA_FILE": "data/concretions/RagamsTraditional.json",
+	"INFO_FILE": "data/concretions/RagamInfo.json",
 	"NODE_RADIUS": 10,
 	"CHARGE": -520,
 	"LINK_STRENGTH": 1.0,

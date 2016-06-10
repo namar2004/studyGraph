@@ -1,6 +1,6 @@
 {
 	"DATA_FILE": "data/concretions/AllJanyamsModal.json",
-	"INFO_FILE": "data/concretions/data3Info.json",
+	"INFO_FILE": "data/concretions/RagamInfo.json",
 	"NODE_RADIUS":8,
 	"CHARGE": -320,
 	"LINK_DISTANCE": 5,

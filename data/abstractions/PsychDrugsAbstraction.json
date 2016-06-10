@@ -1,5 +1,6 @@
 {
 	"DATA_FILE": "data/concretions/PsychDrugs.json",
+	"INFO_FILE": "data/concretions/PsychDrugsInfo.json",
 	"NODE_RADIUS": 15,
 	"CHARGE": -920,
 	"LINK_STRENGTH": 1.8,
