@@ -7,18 +7,19 @@
       height: 100%;
     }
     .node {
-      stroke: #330000;
-      stroke-width: 1.5px;
+      stroke: #330000; /*node outline color*/
+      stroke-width: 1.5px; /*node outline width*/
     }
     .link {
       stroke: #999;
       stroke-opacity: .6;
     }    
     .text {
-      fill: #fff;
+      fill: #fff; /*text color*/
     }   
-
-    .btn {
+    
+    /*button style*/
+    .btn { 
         padding: 14px 24px;
         border: 0 none;
         /*letter-spacing: 1px;*/
@@ -42,41 +43,7 @@
         background: #b80;
         box-shadow: none;
     }            
-/*    INPUT#NNodesInput {
-      height: 30px;
-      width: 80px;
-      background-color: #ceefaa;
-    }
-    INPUT#MaxNodesInput {
-      height: 30px;
-      width: 80px;
-      background-color: #ceefaa;
-    }
-    INPUT#NTrialsInput {
-      height: 30px;
-      width: 80px;
-      background-color: #ceefaa;
-    } 
-    INPUT#LocalityInput {
-      height: 30px;
-      width: 80px;
-      background-color: #ceefaa;
-    } 
-    INPUT#ClusterInput {
-      height: 30px;
-      width: 80px;
-      background-color: #ceefaa;
-    }   
-    INPUT#NumberInput {
-      height: 30px;
-      width: 80px;
-      background-color: #ceefaa;
-    }
-    INPUT#SeedInput {
-      height: 30px;
-      width: 80px;
-      background-color: #ceefaa;
-    } */                  
+                
   </style>
 </head>
 <body style="background-color:#330000;">
@@ -86,9 +53,9 @@
 
     <div class="row-md-2">   
 
-      <div class="col-md-2"> 
+<!--       <div class="col-md-2"> 
         <button type="button" class="btn btn-primary btn-block" onclick="createGraph('Data3Abstraction.json')">Data3</button>
-      </div>
+      </div> -->
 
       <div class="col-md-2"> 
         <button type="button" class="btn btn-primary btn-block" onclick="createGraph('RenalDrugsAbstraction.json')">Renal Drugs</button>
@@ -106,6 +73,10 @@
         <button type="button" class="btn btn-primary btn-block" onclick="createGraph('RagamsTraditionalAbstraction.json')">Ragams by Melakarta</button>
       </div>
 
+      <div class="col-md-2"> 
+        <button type="button" class="btn btn-primary btn-block" onclick="createGraph('completeJanyamsAbstraction.json')">Excessive Janyams</button>
+      </div>      
+
 <!--       <div class="col-md-2"> 
         <button type="button" class="btn btn-primary btn-block" onclick="changeStyle()">Change Style</button>
       </div>  -->     
@@ -120,21 +91,26 @@
   <script src="d3-definitions.js"></script> 
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
+<!--   <script type="text/javascript" src="jquery.tipsy.js"></script>
+  <link href="tipsy.css" rel="stylesheet" type="text/css" />
+ -->
   <script>
 
+
+    //===============================================================================
+    // GLOBAL SETTINGS.  In the future maybe they can be overridden by abstract files. 
+    var NODE_INFO_DICT;
+    var TEXT_COLOR = "#ffffff",
+    DEFAULT_SVG_WIDTH = 1220,
+    DEFAULT_SVG_HEIGHT = 600
+
+
     // var INITIAL_DATASET = "RagamsModalAbstraction.json"
-    var INITIAL_DATASET = "Data3Abstraction.json"
-    var TEXT_COLOR = "#ffffff";
+    // var INITIAL_DATASET = "RagamsTraditionalAbstraction.json"
+    var INITIAL_DATASET = "PsychDrugsAbstraction.json"
+    // var INITIAL_DATASET = "Data3Abstraction.json"
+    // var INITIAL_DATASET = "completeJanyamsAbstraction.json"
 
-    var width = 1220,
-    height = 600
-
-    DATA_FILE = INITIAL_DATASET; 
-    NODE_RADIUS = 2; 
-    CHARGE = -200; 
-    LINK_DISTANCE = 12;
-    FONT_SIZE = "80px";
 
     // function changeStyle(AbstractFilename){
     //   document.body.style.backgroundColor = "#fff";
@@ -142,21 +118,103 @@
     // }    
 
     function createGraph(AbstractFilename){
+      /*function createGraph: loads the settings from an abstraction file
+        and then creates all the svg elements that are specified by the concrete
+        data file*/
+
+      //remove the previous graph drawing, if it existed
       if (document.contains(document.getElementById("svg-screen"))) {
             document.getElementById("svg-screen").remove();
       }
+
+      //load settings from abstraction file...
+      var INFO_FILE;
       $.getJSON("data/abstractions/" + AbstractFilename, function(result){
         DATA_FILE = result.DATA_FILE; 
+        INFO_FILE = result.INFO_FILE;
         NODE_RADIUS = result.NODE_RADIUS; 
         CHARGE = result.CHARGE; 
         LINK_DISTANCE = result.LINK_DISTANCE; 
         FONT_SIZE = result.FONT_SIZE;
-        drawGraph();
+        if (result.LINK_STRENGTH) {
+          LINK_STRENGTH = result.LINK_STRENGTH; 
+        }
+        if (result.SVG_WIDTH) { //only load if it's specified in the abstractions file
+          SVG_WIDTH = result.SVG_WIDTH;
+          SVG_HEIGHT = result.SVG_HEIGHT;
+        } else {
+          SVG_WIDTH = DEFAULT_SVG_WIDTH;
+          SVG_HEIGHT = DEFAULT_SVG_HEIGHT;
+        }
 
+
+        //If there is an associated info file, load that...
+        $.getJSON(INFO_FILE, function(result){
+          NODE_INFO_DICT = result;
+        });  
+
+        //draw the elements!
+        drawGraph();
+        //NOTE: below works until you try to interactiw ith nodes, at which point it snaps back.
+        // if (result.ZOOM) {
+        //   scaleSVG([SVG_WIDTH * result.ZOOM/2, SVG_HEIGHT*result.ZOOM/2], result.ZOOM); 
+        // }   
+        
       });
     }
 
+
+
+
+    //===============================================================================
     createGraph(INITIAL_DATASET)
+
+
+    //NOT USED RIGHT NOW
+    function clicked(d) {
+        // what to do if the node is clicked on
+        // group,name,index,weight,x,y,px,py,fixed
+        // alert(d.x + "-" + d.y + "-" + d.px + "-" + d.py);
+
+        if (d.fixed){
+          d.fixed = 0;
+        } else {
+          d.fixed = 1;
+        }
+        return;
+        // var thisNode = d3.select(this);
+        // var thisNode = d3.select("#" + d.name);
+        // var svg = d3.select("#svg-vis");
+
+      
+
+    }  
+
+    //NOT USED RIGHT NOW
+    function mouseover(d) {
+      console.log(NODE_INFO_DICT[d.name]);
+    };
+    
+    //NOT USED RIGHT NOW
+    function mouseout(d) {
+      console.log(d.name);
+    };
+
+    //change size of SVG "canvas"
+    function scaleSVG(trans, scale){
+      var svg = d3.select("#svg-vis");
+      svg.attr("transform",
+          "translate(" + trans + ")"
+          + " scale(" + scale + ")");  
+    }
+
+    //zoom in on SVG canvas
+    function redraw() {
+      //This function redraws the canvas after the user has zoomed in or out.
+      trans=d3.event.translate;
+      scale=d3.event.scale;
+      scaleSVG(trans, scale);
+    };
 
     //===============================================================================
     // now for the graph creation business
@@ -173,68 +231,33 @@
     d3.scale.category20b();
     d3.scale.category20c();
     */
-    function clicked(d) {
-        // group,name,index,weight,x,y,px,py,fixed
-        // alert(d.x + "-" + d.y + "-" + d.px + "-" + d.py);
-
-        if (d.fixed){
-          d.fixed = 0;
-        } else {
-          d.fixed = 1;
-        }
-        return;
-        var zoomFactor = 2.0;
-        // var thisNode = d3.select(this);
-        var thisNode = d3.select("#" + d.name);
-        var svg = d3.select("#svg-vis");
-
-
-        thisNode.transition();
-        svg.transition().attr("transform", 
-                              "translate(" + 
-                              // (-parseInt(thisNode.attr("cx"))*zoomFactor + width/2) + "," +
-                              // (-parseInt(thisNode.attr("cy"))*zoomFactor + height/2) +
-                              (-parseInt(thisNode.attr("cx"))*zoomFactor + width/2) + "," +
-                              (-parseInt(thisNode.attr("cy"))*zoomFactor + height/2) +                              
-                                ")" + 
-                                "scale(" + zoomFactor + ")");        
-
-    }  
-    
-      function redraw() {
-        //This function redraws the canvas after the user has zoomed in or out.
-        var svg = d3.select("#svg-vis");
-        trans=d3.event.translate;
-        scale=d3.event.scale;
-        svg.attr("transform",
-            // "translate(3,3)"
-            // + " scale(2)");
-            "translate(" + trans + ")"
-            + " scale(" + scale + ")");        
-      };
-
     function drawGraph(){
       var color = d3.scale.category10();
 
       var force = d3.layout.force()
       .charge(CHARGE)
       .linkDistance(LINK_DISTANCE)
-      .size([width, height]);
+      .size([SVG_WIDTH, SVG_HEIGHT])
+      .linkStrength(LINK_STRENGTH)
+      // .friction(0.9)
+      // .gravity(0.1)
+      // .theta(0.8)
+      // .alpha(0.1)
+      ;
 
       var svg = d3.select("#svg-div").append("svg")
-      .attr("width", width)
-      .attr("height", height)
-      // .call(d3.behavior.zoom().on("zoom", redraw))
+      .attr("width", SVG_WIDTH)
+      .attr("height", SVG_HEIGHT)
       .attr("id", "svg-screen")
       .append('svg:g')
-      .call(d3.behavior.zoom().on("zoom", redraw)) //if client zooms, call the function redraw()
-      .attr("id", "svg-vis");
+      .attr("id", "svg-vis")
+      .call(d3.behavior.zoom().on("zoom", redraw)); //if client zooms, call the function redraw()
 
 
       d3.json(DATA_FILE, function(error, json) {
         if (error) throw error;
 
-        force
+        force //we've specified the settings on the force variable above.  Here we just load the graph into it and let it run!
         .nodes(json.nodes)
         .links(json.links)
         .start();
@@ -244,15 +267,15 @@
             //Data is specified as an array of values, and each value is passed as the first argument (d) to selection functions.  With the default join-by-index, the first element in the data array is passed to the first node in the selection, the second element to the second node, and so on.
             .data(json.links) 
             // After callind data(), d3 tries to associate all nodes with tagname ".link" to values in json.links.
-            //However, there aren't yet any such nodes.  the .enter() function makes one.
-            //TODO: unsure what the argument to append() is.
+            // However, there aren't yet any such nodes.  the .enter() function makes one.
+            //TODO: unsure what the argument to append() is.  A class of the object?
             .enter().append("line")
             .attr("class", "link")
             // .style("stroke-width", function(d) { return Math.sqrt(d.value); });
             .style("stroke-width", function(d) { return d.value; });
 
 
-        //Add the graph nodes, with tag name "g.gnode" and some sort of identifier "g"?
+        //Add the graph nodes that contain all elements associated with each node (a circle and some text)
         var gnodes = svg.selectAll('g.gnode')
         .data(json.nodes)
         .enter()
@@ -262,15 +285,19 @@
         .attr("cy", function(d){return d.y})        
         .classed('gnode', true);
 
+        //add the circle element to each gnode, specifying color and radius
         var node = gnodes.append("circle")
         .attr("class", "node")
         .attr("r", NODE_RADIUS)
 
         .style("fill", function(d) { return color(d.group); })
         .call(force.drag)
-        .on("click", clicked);
+        // .on("click", clicked)
+        // .on("mouseover", mouseover)
+        // .on("mouseout", mouseout)
+        ;
 
-
+        //add the text to each gnode
         gnodes.append("text")
         .style("font-size", FONT_SIZE)
         .style("fill", TEXT_COLOR)

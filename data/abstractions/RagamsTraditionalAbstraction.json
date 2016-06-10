@@ -1,7 +1,10 @@
 {
 	"DATA_FILE": "data/concretions/RagamsTraditional.json",
-	"NODE_RADIUS": 15,
-	"CHARGE": -320,
-	"LINK_DISTANCE": 20,
-	"FONT_SIZE": "8px"	
+	"NODE_RADIUS": 10,
+	"CHARGE": -520,
+	"LINK_STRENGTH": 1.0,
+	"LINK_DISTANCE": 5,
+	"FONT_SIZE": "8px",
+	"SVG_WIDTH": 1200,
+	"SVG_HEIGHT": 1200	
 }

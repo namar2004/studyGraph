@@ -1,7 +1,9 @@
 {
 	"DATA_FILE": "data/concretions/data3_numeric.json",
+	"INFO_FILE": "data/concretions/data3Info.json",
 	"NODE_RADIUS": 25,
 	"CHARGE": -820,
 	"LINK_DISTANCE": 150,
+	"LINK_STRENGTH": 0.1,
 	"FONT_SIZE": "22px"
 }

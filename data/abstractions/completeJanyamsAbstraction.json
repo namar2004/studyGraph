@@ -1,0 +1,11 @@
+{
+	"DATA_FILE": "data/concretions/AllJanyamsModal.json",
+	"INFO_FILE": "data/concretions/data3Info.json",
+	"NODE_RADIUS":8,
+	"CHARGE": -320,
+	"LINK_DISTANCE": 5,
+	"LINK_STRENGTH": 5.0,
+	"SVG_WIDTH": 2200,
+	"SVG_HEIGHT": 2200,
+	"FONT_SIZE": "8px"
+}

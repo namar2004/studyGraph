@@ -1,7 +1,8 @@
 {
 	"DATA_FILE": "data/concretions/RenalDrugs.json",
 	"NODE_RADIUS": 15,
-	"CHARGE": -820,
+	"LINK_STRENGTH": 0.8,
+	"CHARGE": -420,
 	"LINK_DISTANCE": 50,
 	"FONT_SIZE": "14px"
 }

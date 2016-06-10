@@ -2,6 +2,7 @@
 	"DATA_FILE": "data/concretions/RagamsModal.json",
 	"NODE_RADIUS": 10,
 	"CHARGE": -320,
+	"LINK_STRENGTH": 1.0,
 	"LINK_DISTANCE": 5,
 	"FONT_SIZE": "8px"	
 }

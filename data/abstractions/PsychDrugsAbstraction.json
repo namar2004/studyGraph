@@ -1,7 +1,9 @@
 {
 	"DATA_FILE": "data/concretions/PsychDrugs.json",
-	"NODE_RADIUS": 20,
-	"CHARGE": -420,
-	"LINK_DISTANCE": 120,
-	"FONT_SIZE": "14px"
+	"NODE_RADIUS": 15,
+	"CHARGE": -920,
+	"LINK_STRENGTH": 1.8,
+	"LINK_DISTANCE": 60,
+	"FONT_SIZE": "14px",
+	"ZOOM": 0.5
 }
