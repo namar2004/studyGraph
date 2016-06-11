@@ -4,7 +4,7 @@ README.md
 # Javascript Version
 
 ## Running it
-1. Navitage into the directory where `index.html` lives
+1. Navitage into the directory where `studyGraph.html` lives
 2. Run the command 
 `$ python -m SimpleHTTPServer`
 3. visit http://0.0.0.0:8000/ in your browser, and observe the webpage!

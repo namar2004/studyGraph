@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <style type="text/css">
+    html, body, .container-fluid, .row, .row>div {
+      height: 100%;
+    }
+
+     /* http://docs.jquery.com/UI/Autocomplete#theming*/
+    .ui-autocomplete { position: absolute; cursor: default; background:#a00 }   
+
+    /* workarounds */
+    html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
+    .ui-menu {
+        list-style:none;
+        padding: 2px;
+        margin: 0;
+        display:block;
+        float: left;
+    }
+    .ui-menu .ui-menu {
+        margin-top: -3px;
+    }
+    .ui-menu .ui-menu-item {
+        margin:0;
+        padding: 0;
+        zoom: 1;
+        color: #fff;
+        font-family: "Times New Roman", Times, serif;
+        float: left;
+        clear: left;
+        width: 100%;
+    }
+    .ui-menu .ui-menu-item a {
+        text-decoration:none;
+        display:block;
+        padding:.2em .4em;
+        line-height:1.5;
+        zoom:1;
+    }
+    .ui-menu .ui-menu-item a.ui-state-hover,
+    .ui-menu .ui-menu-item a.ui-state-active {
+        font-weight: normal;
+        margin: -1px;
+    }     
+    .node {
+      stroke: #330000; /*node outline color*/
+      stroke-width: 1.5px; /*node outline width*/
+    }
+    .link {
+      stroke: #999;
+      stroke-opacity: .6;
+    }    
+    .text {
+      fill: #fff; /*text color*/
+    } 
+
+    INPUT#nodeSearch {
+      height: 40px;
+      width: 160px;
+      background-color: #740;
+      color: #fff;
+      border: 0 none;
+    }      
+    
+    /*style on the infobox that pops up about nodes*/
+    .boxed {
+      background: #000;
+      opacity: 0.7;
+      border: 1px solid green;
+      width:200px;
+      height:100px;
+      /*box-shadow:2px 2px 0px 10px black inset;*/
+      /*margin-bottom:20px;      */
+    }
+        
+    /*button style*/
+    .btn { 
+        padding: 14px 24px;
+        border: 0 none;
+        /*letter-spacing: 1px;*/
+        /*text-transform: uppercase;*/
+    }
+     
+    .btn:focus, .btn:active:focus, .btn.active:focus {
+        outline: 0 none;
+    }
+     
+    .btn-primary {
+        background: #740;
+        color: #ffffff;
+    }
+     
+    .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+        background: #b80;
+    }
+     
+    .btn-primary:active, .btn-primary.active {
+        background: #b80;
+        box-shadow: none;
+    }  
+
+             
+                
+  /*<script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> </script>                */
+  </style>
+</head>
+<body style="background-color:#330000;">
+
+<body>
+  <div class="container-fluid">
+
+    <div class="row-md-2">   
+
+<!--       <div class="col-md-2"> 
+        <button type="button" class="btn btn-primary btn-block" onclick="createGraph('Data3Abstraction.json')">Data3</button>
+      </div> -->
+
+      <div class="col-md-2"> 
+        <button type="button" class="btn btn-primary btn-block" onclick="createGraph('RenalDrugsAbstraction.json')">Renal Drugs</button>
+      </div> 
+
+      <div class="col-md-2"> 
+        <button type="button" class="btn btn-primary btn-block" onclick="createGraph('PsychDrugsAbstraction.json')">Psych Drugs</button>
+      </div>            
+
+      <div class="col-md-2"> 
+        <button type="button" class="btn btn-primary btn-block" onclick="createGraph('RagamsModalAbstraction.json')">Ragams by Bhedam</button>
+      </div>
+
+      <div class="col-md-2"> 
+        <button type="button" class="btn btn-primary btn-block" onclick="createGraph('RagamsTraditionalAbstraction.json')">Ragams by Melakarta</button>
+      </div>
+
+      <div class="col-md-2"> 
+        <button type="button" class="btn btn-primary btn-block" onclick="createGraph('completeJanyamsAbstraction.json')">Excessive Janyams</button>
+      </div>   
+
+      <div class="col-md-2"> 
+        <div class="ui-widget">
+          <INPUT ID="nodeSearch" TYPE="Text" placeholder="Search..." autofocus = TRUE>
+          </INPUT>
+          </div>
+      </div>            
+
+
+<!--       <div class="ui-widget">
+         <input id="search">
+          <button type="button" onclick="searchNode()">Search</button>
+      </div> -->
+<!--       <div class="col-md-2"> 
+        <button type="button" class="btn btn-primary btn-block" onclick="changeStyle()">Change Style</button>
+      </div>  -->     
+
+    </div>
+
+    <div class="row-md-10" id="svg-div">
+    </div>        
+  </div>
+
+  <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
+  <script src="d3-definitions.js"></script> 
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"> </script>
+  <script type='text/javascript' src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"> </script>
+  <script>
+
+
+    //===============================================================================
+    // GLOBAL SETTINGS.  In the future maybe they can be overridden by abstract files. 
+    var NODE_INFO_DICT;
+    var TEXT_COLOR = "#ffffff",
+    DEFAULT_SVG_WIDTH = 1220,
+    DEFAULT_SVG_HEIGHT = 600
+
+
+    var INITIAL_DATASET = "RagamsModalAbstraction.json"
+    // var INITIAL_DATASET = "RagamsTraditionalAbstraction.json"
+    // var INITIAL_DATASET = "PsychDrugsAbstraction.json"
+    // var INITIAL_DATASET = "Data3Abstraction.json"
+    // var INITIAL_DATASET = "completeJanyamsAbstraction.json"
+
+
+    // function changeStyle(AbstractFilename){
+    //   document.body.style.backgroundColor = "#fff";
+    //   TEXT_COLOR = "#000";
+    // }    
+
+    function createGraph(AbstractFilename){
+      /*function createGraph: loads the settings from an abstraction file
+        and then creates all the svg elements that are specified by the concrete
+        data file*/
+
+      //remove the previous graph drawing, if it existed
+      if (document.contains(document.getElementById("svg-screen"))) {
+            document.getElementById("svg-screen").remove();
+      }
+
+      //load settings from abstraction file...
+      var INFO_FILE;
+      $.getJSON("data/abstractions/" + AbstractFilename, function(result){
+        DATA_FILE = result.DATA_FILE; 
+        INFO_FILE = result.INFO_FILE;
+        NODE_RADIUS = result.NODE_RADIUS; 
+        CHARGE = result.CHARGE; 
+        LINK_DISTANCE = result.LINK_DISTANCE; 
+        FONT_SIZE = result.FONT_SIZE;
+        if (result.LINK_STRENGTH) {
+          LINK_STRENGTH = result.LINK_STRENGTH; 
+        }
+        if (result.SVG_WIDTH) { //only load if it's specified in the abstractions file
+          SVG_WIDTH = result.SVG_WIDTH;
+          SVG_HEIGHT = result.SVG_HEIGHT;
+        } else {
+          SVG_WIDTH = DEFAULT_SVG_WIDTH;
+          SVG_HEIGHT = DEFAULT_SVG_HEIGHT;
+        }
+
+        //If there is an associated info file, load that...
+        $.getJSON(INFO_FILE, function(result){
+          NODE_INFO_DICT = result;
+        });  
+
+        //draw the elements!
+        drawGraph();
+        //NOTE: below works until you try to interactiw ith nodes, at which point it snaps back.
+        // if (result.ZOOM) {
+        //   scaleSVG([SVG_WIDTH * result.ZOOM/2, SVG_HEIGHT*result.ZOOM/2], result.ZOOM); 
+        // }   
+        
+      });
+    }
+
+
+
+
+    //===============================================================================
+    createGraph(INITIAL_DATASET)
+
+
+    //NOT USED RIGHT NOW
+    function clicked(d) {
+        // what to do if the node is clicked on
+        // group,name,index,weight,x,y,px,py,fixed
+        // alert(d.x + "-" + d.y + "-" + d.px + "-" + d.py);
+
+        if (d.fixed){
+          d.fixed = 0;
+        } else {
+          d.fixed = 1;
+        }
+        return;
+        // var thisNode = d3.select(this);
+        // var thisNode = d3.select("#" + d.name);
+        // var svg = d3.select("#svg-vis");
+
+      
+
+    }  
+
+
+    //change size of SVG "canvas"
+    function scaleSVG(trans, scale){
+      var svg = d3.select("#svg-vis");
+      svg.attr("transform",
+          "translate(" + trans + ")"
+          + " scale(" + scale + ")");  
+    }
+
+    //zoom in on SVG canvas
+    function redraw() {
+      //This function redraws the canvas after the user has zoomed in or out.
+      trans=d3.event.translate;
+      scale=d3.event.scale;
+      scaleSVG(trans, scale);
+    };
+
+
+    //===============================================================================
+    // now for the graph creation business
+
+    /*
+    About var color:
+    Scales are functions that map from an input domain to an output range. Ordinal scales have a discrete domain, such as a set of names or categories. There are also quantitative scales, which have a continuous domain, such as the set of real numbers. Scales are an optional feature in D3; you don't have to use them, if you prefer to do the math yourself. However, using scales can greatly simplify the code needed to map a dimension of data to a visual representation.
+
+    A scale object, such as that returned by d3.scale.ordinal, is both an object and a function. That is: you can call the scale like any other function, and the scale has additional methods that change its behavior. Like other classes in D3, scales follow the method chaining pattern where setter methods return the scale itself, allowing multiple setters to be invoked in a concise statement.
+
+    Other options:
+
+    d3.scale.category10();
+    d3.scale.category20b();
+    d3.scale.category20c();
+    */
+    function drawGraph(){
+      var color = d3.scale.category10();
+
+      var force = d3.layout.force()
+      .charge(CHARGE)
+      .linkDistance(LINK_DISTANCE)
+      .size([SVG_WIDTH, SVG_HEIGHT])
+      .linkStrength(LINK_STRENGTH)
+      // .friction(0.9)
+      // .gravity(0.1)
+      // .theta(0.8)
+      // .alpha(0.1)
+      ;
+
+      var svg = d3.select("#svg-div").append("svg")
+      .attr("width", SVG_WIDTH)
+      .attr("height", SVG_HEIGHT)
+      .attr("id", "svg-screen")
+      .append('svg:g')
+      .attr("id", "svg-vis")
+      .call(d3.behavior.zoom().on("zoom", redraw)); //if client zooms, call the function redraw()
+
+
+      d3.json(DATA_FILE, function(error, json) {
+        if (error) throw error;
+
+        force //we've specified the settings on the force variable above.  Here we just load the graph into it and let it run!
+        .nodes(json.nodes)
+        .links(json.links)
+        .start();
+
+        //====================================================================
+        // For the popup text
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function (d) {
+              var innerHTML = "<div class='boxed'> <font color=#fff> " + d.name + ":<br>  " + NODE_INFO_DICT[d.name] + "</font></div>";
+              return  innerHTML;
+        })
+        svg.call(tip);        
+
+        //===================================================================
+        // For the search functionality
+        var optArray = [];
+        for (var i = 0; i < json.nodes.length - 1; i++) {
+            optArray.push(json.nodes[i].name);
+        }
+        optArray = optArray.sort();
+        $('#nodeSearch').keydown(function(event) {
+             if(event.keyCode == 13){//this is activated when the user presses enter
+               searchNode();
+             }
+             });
+
+        $(function () {
+            $("#nodeSearch").autocomplete({
+                source: optArray,
+                    messages: {
+                    noResults: '',
+                    results: function() {}
+              }
+            });
+        });
+
+        function searchNode() {
+            /*find the node, fade all other nodes out than it.*/
+            var selectedVal = document.getElementById('nodeSearch').value;
+            // var selectedNode = document.getElementById(selectedVal).__data__;
+            var node = svg.selectAll(".gnode");
+            var zoomFactor = 2.0;
+            if (selectedVal == "none") {
+                // node.style("stroke", "white").style("stroke-width", "1");
+                alert(selectedVal + " not found");
+            } else {
+                var selected = node.filter(function (d, i) {
+                    return d.name != selectedVal;
+                });
+                selected.style("opacity", "0");
+                var link = svg.selectAll(".link")
+                link.style("opacity", "0");
+                // scaleSVG([(selectedNode.x - SVG_WIDTH/2), selectedNode.y - SVG_HEIGHT/2], zoomFactor);
+                d3.selectAll(".gnode, .link").transition()
+                    .duration(2000)
+                    .style("opacity", 1);
+            }
+        }
+        //===================================================================
+        // Below: for the double-click functionality
+        //Toggle stores whether the highlighting is on
+        var toggle = 0;
+        //Create an array logging what is connected to what
+        var linkedByIndex = {};
+        for (i = 0; i < json.nodes.length; i++) {
+            linkedByIndex[i + "," + i] = 1;
+        };
+        json.links.forEach(function (d) {
+            linkedByIndex[d.source.index + "," + d.target.index] = 1;
+        });
+        //This function looks up whether a pair are neighbours
+        function neighboring(a, b) {
+            return linkedByIndex[a.index + "," + b.index];
+        }
+        function connectedNodes() {
+          //used for when a person double clicks on a node.  Fades out all not-connected nodes.
+            if (toggle == 0) {
+                //Reduce the opacity of all but the neighbouring nodes
+                d = d3.select(this).node().__data__;
+
+                node.style("opacity", function (o) {
+                    return neighboring(d, o) | neighboring(o, d) ? 1 : 0.3;
+                });
+                link.style("opacity", function (o) {
+                    return d.index==o.source.index | d.index==o.target.index ? 1 : 0.3;
+                });
+                //Reduce the op
+                toggle = 1;
+            } else {
+                //Put them back to opacity=1
+                node.style("opacity", 1);
+                link.style("opacity", 1);
+                toggle = 0;
+            }
+        }
+      //select all nodes (not to be confused with nodes in the graph) with the tag name ".link"
+      var link = svg.selectAll(".link") 
+            //Data is specified as an array of values, and each value is passed as the first argument (d) to selection functions.  With the default join-by-index, the first element in the data array is passed to the first node in the selection, the second element to the second node, and so on.
+            .data(json.links) 
+            // After callind data(), d3 tries to associate all nodes with tagname ".link" to values in json.links.
+            // However, there aren't yet any such nodes.  the .enter() function makes one.
+            //TODO: unsure what the argument to append() is.  A class of the object?
+            .enter().append("line")
+            .attr("class", "link")
+            // .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+            .style("stroke-width", function(d) { return d.value; });
+
+
+        //Add the graph nodes that contain all elements associated with each node (a circle and some text)
+        var gnodes = svg.selectAll('g.gnode')
+        .data(json.nodes)
+        .enter()
+        .append('g')
+        .attr("id", function(d) {return d.name; })
+        .attr("cx", function(d){return d.x})
+        .attr("cy", function(d){return d.y})        
+        .classed('gnode', true)
+        ;
+
+        //add the circle element to each gnode, specifying color and radius
+        var node = gnodes.append("circle")
+        .attr("class", "node")
+        .attr("r", NODE_RADIUS)
+
+        .style("fill", function(d) { return color(d.group); })
+        .call(force.drag)
+        .on('dblclick', connectedNodes)
+        // .on("click", clicked)
+        // .on("mouseover", mouseover)
+        // .on("mouseout", mouseout)
+         .on('click', tip.show) //Added
+         .on('mouseout', tip.hide) //Added 
+        ;
+
+        //add the text to each gnode
+        gnodes.append("text")
+        .style("font-size", FONT_SIZE)
+        .style("fill", TEXT_COLOR)
+        .text(function(d) { return d.name });
+
+        force.on("tick", function() {
+          link.attr("x1", function(d) { return d.source.x; })
+          .attr("y1", function(d) { return d.source.y; })
+          .attr("x2", function(d) { return d.target.x; })
+          .attr("y2", function(d) { return d.target.y; });
+
+          gnodes.attr("transform", function(d) { 
+            return 'translate(' + [d.x, d.y] + ')'; 
+          });
+        });
+      });
+    }
+  </script>
+</body>
+</html>
